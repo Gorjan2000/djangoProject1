@@ -1,0 +1,58 @@
+#version: "3.8"
+#
+#services:
+#  db:
+#    platform: linux/amd64
+#    image: django
+#    environment:
+#      - SQLITE3_DB=db.sqlite3
+#
+#  web:
+#    platform: linux/amd64
+#    build: .
+#    command: python manage.py runserver 0.0.0.0:5005
+#    ports:
+#      - "5005:5005"
+#    depends_on:
+#      - db
+
+
+
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+  db:
+    image: python:3.9
+    command: sh -c "apt-get update && apt-get install -y sqlite3 && python -c 'import sqlite3'"
+    volumes:
+      - db-data:/db
+
+volumes:
+  db-data:
+
+
+
+
+#web:
+#  build: .
+#  environment:
+#    MYENV: EXAMPLE
+#  volumes:
+#    - .:/code
+#web_migrate:
+#  extends:
+#    service: web
+#  command: python manage.py migrate
+#web_run:
+#  extends:
+#    service: web
+#  command: python manage.py runserver 0.0.0.0:5005
+#  ports:
+#    - "5005:5005"
