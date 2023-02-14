@@ -1,19 +1,44 @@
-version: '3'
+#version: '3'
+#
+#services:
+#  web:
+#    build: .
+#    command: python manage.py runserver 0.0.0.0:8080
+#    volumes:
+#      - .:/app
+#    ports:
+#      - "8080:8080"
+#  db:
+#    image: python:3.9
+#    command: sh -c "apt-get update && apt-get install -y sqlite3 && python -c 'import sqlite3'"
+#    volumes:
+#      - db-data:/db
+#
+#volumes:
+#  db-data:
+#
 
+version: '3.8'
 services:
-  web:
+  django:
     build: .
-    command: python manage.py runserver 0.0.0.0:8080
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
-    ports:
-      - "8080:8080"
+    depends_on:
+      - db
+
   db:
     image: python:3.9
     command: sh -c "apt-get update && apt-get install -y sqlite3 && python -c 'import sqlite3'"
     volumes:
-      - db-data:/db
+      - ./db.sqlite3:/db.sqlite3
 
-volumes:
-  db-data:
-
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml

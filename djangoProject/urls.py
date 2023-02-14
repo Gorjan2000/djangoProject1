@@ -16,8 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from prometheus_client import multiprocess
+from prometheus_client import CONTENT_TYPE_LATEST
+from django.http import HttpResponse
+
+
+def metrics(request):
+    data = multiprocess.get_stats_for_all_processes()
+    return HttpResponse(content=data, content_type=CONTENT_TYPE_LATEST)
+
 
 urlpatterns = [
     path('', views.helloWorld, name='helloWorld'),
     path('admin/', admin.site.urls),
+    path('metrics/', metrics),
 ]
