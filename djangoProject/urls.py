@@ -22,7 +22,7 @@ from django.http import HttpResponse
 
 
 def metrics(request):
-    data = multiprocess.get_stats_for_all_processes()
+    data = multiprocess.MultiProcessCollector
     return HttpResponse(content=data, content_type=CONTENT_TYPE_LATEST)
 
 

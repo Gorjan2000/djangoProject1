@@ -6,26 +6,27 @@
 #RUN pip install -r requirements.txt
 #COPY . /code/
 
-# Use an existing Python image as the base image
+
 FROM python:3.9-alpine
 
-# Set the working directory
+# Se setira raboten folder
 WORKDIR /app
 
-# Copy the requirement file
+# Se kopiraat potrebnite moduli
 COPY requirements.txt .
 
-# Install the required packages
+# Se instaliraat potrebnite moduli
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
+# Se kopira kodot od aplikacijata
 COPY . .
 
-# Django App
+# Django aplikacijata da startne na port 8000
 EXPOSE 8000
 
-# Prometheus
+# Prometheus da startne na 9090
 EXPOSE 9090
 
-# Run the Django application
+# Start na Django Aplikacijata
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+

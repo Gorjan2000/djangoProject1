@@ -20,6 +20,7 @@
 
 version: '3.8'
 services:
+  #container za aplikacija
   django:
     build: .
     ports:
@@ -29,13 +30,14 @@ services:
       - .:/app
     depends_on:
       - db
-
+  #container za bazata
   db:
     image: python:3.9
     command: sh -c "apt-get update && apt-get install -y sqlite3 && python -c 'import sqlite3'"
     volumes:
       - ./db.sqlite3:/db.sqlite3
 
+  #container za prometheus
   prometheus:
     image: prom/prometheus
     ports:

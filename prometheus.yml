@@ -1,13 +1,22 @@
 global:
+  # vleche podatoci na sekoi 5sec
   scrape_interval: 5s
 
 scrape_configs:
+    # ime na job
   - job_name: 'django'
+     # vleche podatoci na sekoi 5sec
     scrape_interval: 5s
+     # od koj url da vleche podatoci
     static_configs:
       - targets: ['django:8000']
 
+ # ime na job
   - job_name: 'prometheus'
+    # vleche podatoci na sekoi 5sec
     scrape_interval: 5s
+    # od koj url da vleche podatoci
     static_configs:
       - targets: ['prometheus:9090']
+
+
